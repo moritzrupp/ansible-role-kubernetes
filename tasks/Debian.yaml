@@ -16,7 +16,7 @@
   when: ansible_distribution != "Ubuntu"
 
 - name: Add docker repo
-  apt_repository: repo='deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable' state=present update_cache=yes
+  apt_repository: repo='deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} {{ (ansible_distribution_version is version_compare('18.04', '>=') | ternary('edge', 'stable') }}' state=present update_cache=yes
   when: ansible_distribution == "Ubuntu"
 
 - name: Install docker 17.03
